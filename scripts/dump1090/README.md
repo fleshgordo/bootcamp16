@@ -1,9 +1,9 @@
-## dump1090 -> parsing dump1090 data through an OSC relay
+## dump1090json2osc -> parsing dump1090 data through an OSC relay
 
-# Installation according to:
+Installation according to:
 https://github.com/antirez/dump1090
 
-# start with net and interactive mode
+**start dump1090 with net and interactive mode**
 ~~~~
 ./dump1090 --interactive --net
 ~~~~
@@ -15,7 +15,7 @@ http://localhost:8080/data.json
 
 check if this works!
 
-# OSC relay
+**OSC relay**
 Now we can start our python JSON - OSC relay with
 
 ~~~~
@@ -25,7 +25,7 @@ python dump1090json2osc.py
 This script works in OSC multiclient mode - hence multiple client addresses can be defined.
 Look at the targets dictionary.
 
-# Receive data
+**Receive data**
 
 Test the OSC server
 ~~~~
@@ -33,4 +33,4 @@ python OSCserverLocalhost.py
 ~~~~
 
 Check out the processing sketch called oscP5parsing.pde for capturing data in processing.
-You'll need the oscP5 library
+You'll need the oscP5 library: http://www.sojamo.de/libraries/oscP5/
