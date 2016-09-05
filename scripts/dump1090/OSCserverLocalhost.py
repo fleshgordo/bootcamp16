@@ -1,5 +1,6 @@
 import OSC
 
+print("listening on 127.0.0.1 port 7777")
 def handler(addr, tags, data, client_address):
     txt = "OSCMessage '%s' from %s: " % (addr, client_address)
     txt += str(data)

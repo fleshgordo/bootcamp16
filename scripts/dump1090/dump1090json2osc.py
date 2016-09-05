@@ -21,7 +21,7 @@ old_data = []
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    default_ip = "192.168.10.173"
+    default_ip = "0.0.0.0"
     default_port = 5005
     parser.add_argument("--ip", default=default_ip,
         help="The ip of the OSC server")
@@ -31,17 +31,19 @@ if __name__ == "__main__":
 
     ### OSC
     send_address = args.ip, args.port
-    print send_address
-    c = OSC.OSCMultiClient()
 
-    # Add more cliens for workshop participants
-    targets = {
-        ('127.0.0.1',7777):('/planes',{'':True}),
-        ('192.168.10.173',5005):('/planes',{'':True}),
-        ('192.168.10.129',6666):('/planes',{'':True})
-    }
-    c.updateOSCTargets(targets)
-    c.connect( send_address )
+    if (args.ip == default_ip and args.port == default_port):
+        c = OSC.OSCMultiClient()
+        # Add more cliens for workshop participants
+        targets = {
+            ('127.0.0.1',7777):('/planes',{'':True}),
+            ('192.168.10.173',5005):('/planes',{'':True}),
+            ('192.168.10.129',6666):('/planes',{'':True})
+        }
+        c.updateOSCTargets(targets)
+    else:
+        c = OSC.OSCClient()
+        c.connect( send_address )
 
     while True:
             #try:
