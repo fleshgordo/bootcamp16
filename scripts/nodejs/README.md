@@ -1,9 +1,9 @@
 ## Relaying (bridging) OSC data from nodejs to websockets
 
-# Installation (should install all dependencies based on packages.json):
+Installation (should install all dependencies based on packages.json):
 npm install
 
-# first make sure your OSC client is sending data, here's a simple example (sending to localhost on port 5005)
+first make sure your OSC client is sending data, here's a simple example (sending to localhost on port 5005)
 ~~~~
 python3 osc_client.py
 ~~~~
