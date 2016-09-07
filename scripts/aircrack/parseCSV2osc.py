@@ -1,4 +1,5 @@
 import subprocess, glob, time, csv, random
+import OSC
 
 # airodump-ng is running and logging the results into a csv file
 # with the following command: sudo airodump-ng -o csv -w manuf mon0
@@ -17,8 +18,26 @@ def lookup(dump):
     next(scan)
     scanDict=csv.DictReader((line.replace('\0','') for line in scan), delimiter=',')
     #return scanDict
+    print scanDict
     for aDict in scanDict:
-        print aDict
+        unwanted = ['', u'', None, False, [], 'SPAM']
+        unwantedValues = ['Station MAC','Last time seen','BSSID','Probed ESSIDs','First time seen','# packets','Power']
+        aDictClean = {k.strip():v.strip() for k, v in aDict.iteritems() if not v is None}
+        #print aDictClean
+        msg = ""
+        for k, v in aDictClean.items():
+            if v not in unwantedValues:
+                if k == "LAN IP":
+                    v = v.replace(" ", "")
+                if k == "Privacy":
+                    if v == "WPA" or v == "WEP" or v == "WPA2" or v == "OPN" or v == "WPA2WPA":
+                        msg = "/station%s" %msg
+                    else:
+                        msg = "/client%s" %msg
+                if v == "":
+                    v = "None"
+                msg += "/%s" %v
+        print msg
     # for adict in scanDict:
     #     if adict.has_key(key_value) and adict.get(key_value)!=None:
     #         try:
@@ -31,5 +50,3 @@ def lookup(dump):
     # return results
 
 new_packet_list=lookup(csv_last)
-
-print new_packet_list
