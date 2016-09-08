@@ -24,9 +24,9 @@ The skeleton of an OSC message looks like this for accesspoints:
 | ------------- |:-------------:| ------------:| -------------------:| -------------------:| ----------------:| --------:| -------:| ------------:|
 | /wifi         | Station       | # number     | 00:00:00:00:00:00   | YYYY-MM-DD HH:MM:SS | OPN, WEP, WPA2   | # number | 0.0.0.0 | # number     |
 
-| Cipher         | Auth          | First time seen     | None | Power | ESSID     | Channel | # beacons |
-|---------------:| -------------:| -------------------:| ----:| -----:| ---------:| -------:| ---------:|
-| CCMP or TKIP   | PSK or None   | YYYY-MM-DD HH:MM:SS | None | in dB | WIFI name | # 1-14  | # number  |
+| Cipher                                    | Auth                   | First time seen     | None | Power                             | ESSID     | Channel | # beacons |
+|------------------------------------------:| ----------------------:| -------------------:| ----:| ---------------------------------:| ---------:| -------:| ---------:|
+| CCMP, WRAP, TKIP, WEP, WEP40, or WEP104   | MGT, SKA, PSK or OPN   | YYYY-MM-DD HH:MM:SS | None | Signal level reported by the card | WIFI name | # 1-14  | # number  |
 
 The skeleton of an OSC message looks like this for clients:
 
