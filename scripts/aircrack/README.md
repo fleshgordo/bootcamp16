@@ -20,6 +20,6 @@ python parseCSV2osc.py
 
 The skeleton of an OSC message looks like this for accesspoints:
 
-| OSC header    | Type          | BSSID              |
-| ------------- |:-------------:| ------------------:|
-| /wifi         | /station      | /00:00:00:00:00:00 |
+| OSC header    | Type          | Station MAC        | First time seen     | Probed ESSID       | Last time seen      | Packets  | Power    |
+| ------------- |:-------------:| ------------------:| -------------------:| ------------------:| -------------------:| --------:| --------:|
+| /wifi         | station       | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | # number | # number |
