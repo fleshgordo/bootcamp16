@@ -1,4 +1,4 @@
-import subprocess, glob, time, csv, random
+import subprocess, glob, time, csv, random, argparse
 import OSC
 
 # airodump-ng is running and logging the results into a csv file
@@ -20,9 +20,9 @@ def lookup(dump):
     #return scanDict
     print scanDict
     for aDict in scanDict:
-        unwanted = ['', u'', None, False, [], 'SPAM']
+        unwanted = ['', None, False]
         unwantedValues = ['Station MAC','Last time seen','BSSID','Probed ESSIDs','First time seen','# packets','Power']
-        aDictClean = {k.strip():v.strip() for k, v in aDict.iteritems() if not v is None}
+        aDictClean = {k.strip():v.strip() for k, v in aDict.iteritems() if v not in unwanted}
         #print aDictClean
         msg = ""
         for k, v in aDictClean.items():
@@ -37,16 +37,26 @@ def lookup(dump):
                 if v == "":
                     v = "None"
                 msg += "/%s" %v
-        print msg
-    # for adict in scanDict:
-    #     if adict.has_key(key_value) and adict.get(key_value)!=None:
-    #         try:
-    #             datas.append(int(adict.get(key_value)))
-    #         except:
-    #             pass
-    #datas.sort(reverse=True)
-    # for i in range(4):
-    #     results.append(datas[i])
-    # return results
+        if msg != "":
+            print "sending osc: %s" %msg
+            OSCmsg=OSC.OSCMessage()
+            OSCmsg.setAddress('/wifi')
+            OSCmsg.append(msg)
+            c.send(OSCmsg)
 
-new_packet_list=lookup(csv_last)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    default_ip = "0.0.0.0"
+    default_port = 5005
+    parser.add_argument("--ip", default=default_ip,
+        help="The ip of the OSC server")
+    parser.add_argument("--port", type=int, default=default_port,
+        help="The port the OSC server is listening on")
+    args = parser.parse_args()
+
+    ### OSC
+    send_address = args.ip, args.port
+    c = OSC.OSCClient()
+    c.connect( send_address )
+
+    new_packet_list=lookup(csv_last)
