@@ -20,6 +20,13 @@ python parseCSV2osc.py
 
 The skeleton of an OSC message looks like this for accesspoints:
 
-| OSC header    | Type          | Station MAC        | First time seen     | Probed ESSID       | Last time seen      | Packets  | Power    |
+| OSC header    | Type          | # IV packets | ESSID               | Last time seen      | Privacy          | Speed    | LAN IP  | ID Length    | Cipher         | Auth          | First time seen     | None | Power | ESSID     | Channel | # beacons |
+| ------------- |:-------------:| ------------:| -------------------:| -------------------:| ----------------:| --------:| -------:| ------------:|---------------:| -------------:| -------------------:| ----:| -----:| ---------:| -------:| ---------:|
+| /wifi         | Station       | # number     | 00:00:00:00:00:00   | YYYY-MM-DD HH:MM:SS | OPN, WEP, WPA2   | # number | 0.0.0.0 | # number     | CCMP or TKIP   | PSK or None   | YYYY-MM-DD HH:MM:SS | None | in dB | WIFI name | # 1-14  | # number  |
+
+
+The skeleton of an OSC message looks like this for clients:
+
+| OSC header    | Type          | Station MAC        | Last time seen      | Probed ESSID       | First time seen     | Packets  | Power    |
 | ------------- |:-------------:| ------------------:| -------------------:| ------------------:| -------------------:| --------:| --------:|
-| /wifi         | station       | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | # number | # number |
+| /wifi         | Client        | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | 00:00:00:00:00:00  | YYYY-MM-DD HH:MM:SS | # number | # number |
