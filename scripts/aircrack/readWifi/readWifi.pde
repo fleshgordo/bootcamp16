@@ -23,17 +23,20 @@ void draw() {
 void oscEvent(OscMessage theOscMessage) {
   /* check if theOscMessage has the address pattern we are looking for. */
   if(theOscMessage.checkAddrPattern("/wifi")==true) {
-    println(theOscMessage.typetag());
-  
     /* check if the typetag is the right one. */
-    if(theOscMessage.checkTypetag("ssff")) {
+    if(theOscMessage.checkTypetag("s")) {
       /* parse theOscMessage and extract the values from the osc message arguments. */
-      float lat = theOscMessage.get(2).floatValue();  
-      float lon = theOscMessage.get(3).floatValue();
-      String flight = theOscMessage.get(0).stringValue();
-      String squawk = theOscMessage.get(1).stringValue();
-      print("### received an osc message /planes with typetag ssff.");
-      println(" values: "+flight+", "+squawk+", "+lat+", "+lon);
+      String[] list = split(theOscMessage.get(0).stringValue(), '/');
+      String WifiType = list[1];
+      //println(WifiType);
+      if (WifiType.equals("client")) {
+        print("##### clients #### ");
+        //println(list[2]); 
+      }
+      else if (WifiType.equals("station")) {
+        print("##### station #### ");
+        println(list[14]); 
+      }
       return;
     }  
   } 

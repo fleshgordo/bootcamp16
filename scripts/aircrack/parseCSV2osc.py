@@ -9,8 +9,6 @@ import OSC
 csvs=subprocess.Popen("ls -t1 *csv | head -1", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 csv_last=csvs.communicate()[0].strip()
 
-key_value=(' # IV') # look up this value in the scan dump
-
 def lookup(dump):
     datas=[]
     results=[]
@@ -38,16 +36,17 @@ def lookup(dump):
                     v = "None"
                 msg += "/%s" %v
         if msg != "":
-            print "sending osc: %s" %msg
+            #print "sending osc: %s" %msg
             OSCmsg=OSC.OSCMessage()
-            OSCmsg.setAddress('/wifi')
+            #OSCmsg.setAddress('/wifi')
             OSCmsg.append(msg)
             c.send(OSCmsg)
+            print OSCmsg
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     default_ip = "0.0.0.0"
-    default_port = 5005
+    default_port = 6666
     parser.add_argument("--ip", default=default_ip,
         help="The ip of the OSC server")
     parser.add_argument("--port", type=int, default=default_port,
@@ -55,8 +54,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ### OSC
-    send_address = args.ip, args.port
-    c = OSC.OSCClient()
-    c.connect( send_address )
-
-    new_packet_list=lookup(csv_last)
+    c = OSC.OSCMultiClient()
+    # Add more cliens for workshop participants
+    targets = {
+        ('0.0.0.0',6666):('/wifi',{'':True})
+    }
+    c.updateOSCTargets(targets)
+    ### Endless loop
+    while True:
+        new_packet_list=lookup(csv_last)
+        time.sleep(1)
