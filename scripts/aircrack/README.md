@@ -2,6 +2,20 @@
 
 You'll need an aircrack installation and a compatible WIFI adapter. Installation instructions: http://www.aircrack-ng.org/
 
+Before starting, make sure you have pyOSC library for python installed:
+~~~~
+sudo pip install pyOSC
+~~~~
+
+(If pip installer for some reason isn't working, download the tarball file directly from: https://pypi.python.org/pypi/pyOSC)
+~~~~
+tar -xvf pyOSC-0.3.5b-5294.tar.gz
+cd pyOSC*
+sudo python setup.py install
+~~~~
+
+# Aircrack part
+
 Put the card into monitor mode
 ~~~~
 airmon-ng start wlan0
@@ -14,6 +28,7 @@ airodump-ng -w dump mon0
 
 This should create a dumpXX.csv file in the same folder which is being used by the python script.
 
+# OSC relay
 ~~~~
 python parseCSV2osc.py
 ~~~~
