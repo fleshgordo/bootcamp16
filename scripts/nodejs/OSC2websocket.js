@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
 // Create an osc.js UDP Port listening on port 57121.
 var udpPort = new osc.UDPPort({
     localAddress: "127.0.0.1",
-    localPort: 5005
+    localPort: 6666
 });
 
 // Open the socket.
