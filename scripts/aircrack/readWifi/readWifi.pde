@@ -17,9 +17,9 @@ void setup() {
   /* start oscP5, listening for incoming messages at port 6666 */
   oscP5 = new OscP5(this,6666);
 
-    // Create the font
-  printArray(PFont.list());
-  f = createFont("Droid Sans", 24);
+  // Create the font
+  //printArray(PFont.list());
+  f = createFont("Helvetica", 24);
   textFont(f);
   background(102);
   textAlign(RIGHT);
@@ -28,7 +28,7 @@ void setup() {
 }
 
 void draw() {
-  
+   redraw();
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -47,9 +47,13 @@ void oscEvent(OscMessage theOscMessage) {
       }
       else if (WifiType.equals("station")) {
         print("##### station #### ");
-        println(list[14]); 
+        print ("power: ");
+        print(list[14]); 
+        
+        int Power = int(list[13]);
+        println(Power);
         textAlign(CENTER);
-        drawType(list[14], width * 0.5);
+        drawType(list[14], Power * -5);
       }
       return;
     }  
@@ -57,12 +61,14 @@ void oscEvent(OscMessage theOscMessage) {
 
 }
 void drawType(String content, float x) {
-  print(content);
-          println("drawing text"); 
+  //print(content);
+          print("drawing text at pos: ");
+          println(x);
           stroke(255);
   line(x, 0, x, 65);
   line(x, 220, x, height);
-  fill(128);
+  fill(128);translate(width/2, height/2);
+rotate(PI/3.0);
   text(content, x, 95);
   fill(51);
   redraw();

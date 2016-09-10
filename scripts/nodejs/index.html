@@ -1,11 +1,40 @@
-<script src="./socket.io-1.4.5.js"></script>
-<script>
-  var socket = io('http://192.168.10.129:8888');
-  socket.on('oscMsg', function (data) {
-    console.log(data['address']);
-    console.log(data['args']);
-    var wifis = data['args'][0].split('/');
-    console.log(wifis);
+<html>
+<head>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./socket.io-1.4.5.js"></script>
+  <script>
+    var wifiList = {};
+    var socket = io('http://192.168.10.235:8888');
+    socket.on('oscMsg', function (data) {
+      var wifis = data['args'][0].split('/');
+      var wifiType = wifis[1];
+      var wifiMAC = wifis[3];
 
-  });
-</script>
+      if (wifiType == "station") {
+        // use the MAC addres as unique key for the wifilist Object
+        // check if key exists, if not add data
+        //typeof(wifiList[wifiMAC]) != "undefined" ? function() {} : wifiList[wifiMAC] = data['args'][0];
+        wifiList[wifiMAC] = data['args'][0]
+      }
+    });
+
+    var refreshInterval = setInterval(function()  {
+      var htmlContent = ""
+      Object.keys(wifiList).forEach(function(key) {
+        console.log(wifiList[key]);
+        var wifis = wifiList[key].split('/'),
+          wifiName = wifis[14]
+          wifiPower = 100 - +wifis[13] * -1;
+        htmlContent += "<div class='wifiList' style='width:" + wifiPower + "%;'>" + wifiName + "</div>";
+      });
+      document.getElementById("container").innerHTML = htmlContent;
+    }, 1000);
+
+  </script>
+</head>
+
+<body>
+  <div id="container">
+  </div>
+</body>
+</html>

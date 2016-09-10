@@ -4,6 +4,11 @@ var fs = require('fs');
 var osc = require("osc"),
     http = require("http");
 
+// OSC parts
+
+var ipAddress = "192.168.10.235",
+ portNumber = 6666;
+
 // websocket parts
 app.listen(8888);
 
@@ -31,8 +36,8 @@ io.on('connection', function (socket) {
 
 // Create an osc.js UDP Port listening on port 57121.
 var udpPort = new osc.UDPPort({
-    localAddress: "127.0.0.1",
-    localPort: 6666
+    localAddress: ipAddress,
+    localPort: portNumber
 });
 
 // Open the socket.
