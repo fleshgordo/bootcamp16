@@ -21,9 +21,9 @@ Put the card into monitor mode
 airmon-ng start wlan0
 ~~~~
 
-Start scanning
+Start scanning (-o writes only CSV file)
 ~~~~
-airodump-ng -w dump mon0
+airodump-ng -o csv -w dump mon0
 ~~~~
 
 This should create a dumpXX.csv file in the same folder which is being used by the python script.
