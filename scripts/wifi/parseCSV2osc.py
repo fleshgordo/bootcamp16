@@ -75,7 +75,7 @@ if __name__ == "__main__":
     while True:
         lookup(csv_last)
 	OSCmsg=OSC.OSCMessage()
-	OSCmsg.append("EOF")
+	OSCmsg.append("/EOF")
 	c.send(OSCmsg)
 	print OSCmsg
         time.sleep(1)
