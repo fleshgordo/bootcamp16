@@ -74,4 +74,8 @@ if __name__ == "__main__":
     ### Endless loop
     while True:
         lookup(csv_last)
+	OSCmsg=OSC.OSCMessage()
+	OSCmsg.append("EOF")
+	c.send(OSCmsg)
+	print OSCmsg
         time.sleep(1)
