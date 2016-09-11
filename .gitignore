@@ -2,3 +2,4 @@ node_modules/
 *.cap
 *.netxml
 *.csv
+*.DS_Store
