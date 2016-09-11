@@ -6,6 +6,11 @@ import OSC
 # subprocess looks for the last edited csv file in current folder
 # this file is parsed by the csv module to find the number of data packets that have passed through the network since the last check
 
+# Add more cliens for workshop participants
+targets = {
+    ('0.0.0.0',6666):('/wifi',{'':True})
+}
+
 csvs=subprocess.Popen("ls -t1 *csv | head -1", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 csv_last=csvs.communicate()[0].strip()
 
@@ -18,38 +23,41 @@ def lookup(dump):
     countStations = 0
     countClients = 0
     for aDict in scanDict:
-	try:
-		unwanted = ['', None, False]
-		unwantedValues = ['Station MAC','Last time seen','BSSID','Probed ESSIDs','First time seen','# packets','Power']
-		aDictClean = {k.strip():v.strip() for k, v in aDict.iteritems() if v not in unwanted}
-		msg = ""
-		for k, v in aDictClean.items():
-		    if v not in unwantedValues:
-			if k == "LAN IP":
-			    v = v.replace(" ", "")
-			# seperate between clients and stations
-			if k == "Privacy":
-			    if v == "WPA" or v == "WEP" or v == "WPA2" or v == "OPN" or v == "WPA2WPA":
-				msg = "/station%s" %msg
-				countStations += 1
-			    else:
-				msg = "/client%s" %msg
-				countClients += 1
-			if v == "":
-			    v = "None"
-			# compose OSC message
-			msg += "/%s" %v
-		# only send OSC if message is not empty
-		if msg != "":
-		    #print "sending osc: %s" %msg
-		    OSCmsg=OSC.OSCMessage()
-		    #OSCmsg.setAddress('/wifi')
-		    OSCmsg.append(msg)
-		    c.send(OSCmsg)
-		    print OSCmsg
-	except:
-		pass
-    return countStations, countClients
+        try:
+    		unwanted = ['', None, False]
+    		unwantedValues = ['Station MAC','Last time seen','BSSID','Probed ESSIDs','First time seen','# packets','Power']
+    		aDictClean = {k.strip():v.strip() for k, v in aDict.iteritems() if v not in unwanted}
+    		msg = ""
+    		for k, v in aDictClean.items():
+    		    if v not in unwantedValues:
+    			if k == "LAN IP":
+    			    v = v.replace(" ", "")
+    			# seperate between clients and stations
+    			if k == "Privacy":
+    			    if v == "WPA" or v == "WEP" or v == "WPA2" or v == "OPN" or v == "WPA2WPA":
+    				msg = "/station%s" %msg
+    				countStations += 1
+    			    else:
+    				msg = "/client%s" %msg
+    				countClients += 1
+    			if v == "":
+    			    v = "None"
+    			# compose OSC message
+    			msg += "/%s" %v
+    		# only send OSC if message is not empty
+    		if msg != "":
+    		    OSCmsg=OSC.OSCMessage()
+    		    OSCmsg.append(msg)
+    		    c.send(OSCmsg)
+    		    print OSCmsg
+        except:
+            pass
+    # sending EOF for OSC dump
+    OSCmsgEOF=OSC.OSCMessage()
+    OSCmsgEOF.append("/EOF")
+    c.send(OSCmsgEOF)
+    print OSCmsgEOF
+    #return countStations, countClients
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -63,19 +71,9 @@ if __name__ == "__main__":
 
     ### OSC
     c = OSC.OSCMultiClient()
-    # Add more cliens for workshop participants
-    targets = {
-        ('0.0.0.0',6666):('/wifi',{'':True}),
-        ('192.168.10.235',6666):('/wifi',{'':True}),
-        ('192.168.10.10',6666):('/wifi',{'':True}),
-        ('192.168.10.129',6666):('/wifi',{'':True})
-    }
     c.updateOSCTargets(targets)
+
     ### Endless loop
     while True:
         lookup(csv_last)
-	OSCmsg=OSC.OSCMessage()
-	OSCmsg.append("/EOF")
-	c.send(OSCmsg)
-	print OSCmsg
         time.sleep(1)
