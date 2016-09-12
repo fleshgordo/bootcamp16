@@ -4,7 +4,8 @@ class WifiPoint {
   int diameter;    // Diameter of circle (unused == 0).
   String mac;
   String[] dataList;
-
+  float margin = 130;
+  
   void init(int idiameter, String iMAC, String iList[]) {
    x = int(random(width));
    y = int(random(height));
@@ -13,7 +14,19 @@ class WifiPoint {
    dataList = iList;
    //initialized = true;
   }
-
+  
+  void drawLine(float _x, float _y) {
+    String wifiName = this.dataList[14];
+    float wifiPower =  100 + float(this.dataList[13]);
+    float yWifiPos = map(wifiPower, 0, 100, _y, _y-10);
+    fill(0);
+    text(wifiName, 10, _y);
+    point(margin + _x, yWifiPos);
+  }
+  String[] getParams() {
+    return this.dataList;
+  }
+  
   void printParams() {
     print("This wifiPoint has MAC address: ");
     print(this.mac);
