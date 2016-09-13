@@ -9,7 +9,7 @@ import OSC
 # Add more cliens for workshop participants
 targets = {
     ('0.0.0.0',6666):('/wifi',{'':True}),
-    # ('127.0.0.1',6666):('/wifi',{'':True})
+    ('127.0.0.1',6666):('/wifi',{'':True})
 }
 
 csvs=subprocess.Popen("ls -t1 *csv | head -1", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

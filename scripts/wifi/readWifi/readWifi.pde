@@ -38,12 +38,8 @@ void setup() {
 
 void draw() {
   try {
-    for (int k=0;k<10;k++) {
-      float yPos = textOffset + 30 * k;  
-      WifiPoints[k].drawLine(x, yPos);
-    }
-    x = frameCount % (width - marginLeft);
-    if (x == 0) background(220);
+    //WifiAll.drawLine();
+    WifiAll.createCircles();
   }
   catch (NullPointerException e) {
     //e.printStackTrace();

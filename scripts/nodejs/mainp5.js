@@ -6,7 +6,7 @@ function setup() {
 function draw() {
   background(255);
 //  console.log(init);
-  if (init == false) {
+  //if (init == false) {
     console.log(stationList);
     if (stationList) {
       init = true;
@@ -22,7 +22,7 @@ function draw() {
       //htmlContent += "<div class='wifiList' style='width:" + wifiPower + "%;'>" + wifiName + "</div>";
     });
 
-  }
+  //}
 
 
 }
