@@ -36,9 +36,9 @@ if __name__ == "__main__":
         c = OSC.OSCMultiClient()
         # Add more cliens for workshop participants
         targets = {
-            ('127.0.0.1',7777):('/planes',{'':True}),
-            ('192.168.10.173',5005):('/planes',{'':True}),
-            ('192.168.10.129',6666):('/planes',{'':True})
+			('127.0.0.1',7777):('/planes',{'':True}),
+            ('192.168.1.111',7777):('/planes',{'':True}),
+            ('192.168.1.118',7777):('/planes',{'':True}),
         }
         c.updateOSCTargets(targets)
     else:
