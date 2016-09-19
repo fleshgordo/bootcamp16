@@ -65,14 +65,7 @@ if __name__ == "__main__":
     c = OSC.OSCMultiClient()
     # Add more cliens for workshop participants
     targets = {
-        ('0.0.0.0',6666):('/wifi',{'':True}),
-        ('192.168.1.254',6666):('/wifi',{'':True}),
-        ('192.168.1.118',6666):('/wifi',{'':True}),
-        ('192.168.1.146',6666):('/wifi',{'':True}),
-        ('192.168.1.111',6666):('/wifi',{'':True}),
-        ('192.168.1.235',6666):('/wifi',{'':True}),
-        ('192.168.1.2',6666):('/wifi',{'':True}),
-        ('192.168.1.3',6666):('/wifi',{'':True})
+        ('224.0.0.1',6666):('/wifi',{'':True})
     }
     c.updateOSCTargets(targets)
     ### Endless loop
