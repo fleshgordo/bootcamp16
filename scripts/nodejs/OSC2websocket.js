@@ -6,7 +6,8 @@ var osc = require("osc"),
 
 // OSC parts
 
-var ipAddress = "192.168.10.235",
+//var ipAddress = "192.168.10.235",
+var ipAddress = "127.0.0.1",
  portNumber = 6666;
 
 // websocket parts
