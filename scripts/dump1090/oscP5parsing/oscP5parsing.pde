@@ -8,7 +8,10 @@ import oscP5.*;
 import netP5.*;
 
 OscP5 oscP5;
-StringDict allPlanes;
+String lastPlane = "";
+float lastPosX = 0;
+float lastPosY = 0;
+
 //allPlanes = new StringDict();
 
 void setup() {
@@ -20,6 +23,7 @@ void setup() {
 
 void draw() {
   background(0);
+  text(lastPlane, 150,150);
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -33,6 +37,11 @@ void oscEvent(OscMessage theOscMessage) {
       String flightnumber = theOscMessage.get(0).stringValue();
       float lat = theOscMessage.get(1).floatValue();
       int altitude = theOscMessage.get(3).intValue();
+      
+      lastPlane = flightnumber;
+      lastPosX = lat;
+      lastPosY = lon;
+      
       print("### received an osc message /planes with typetag ssff.");
       //println(" values: "+flight+", "+squawk+", "+lat+", "+lon);
       println(" values: "+flightnumber+", "+lat+", "+lon + " altitude: "  + altitude);
