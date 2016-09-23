@@ -10,7 +10,7 @@ OscP5 oscP5;
 void setup() {
   size(400, 400);
   frameRate(25);
-  
+
   oscP5 = new OscP5(this, 6666);
 }
 
