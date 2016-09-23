@@ -38,12 +38,12 @@ void oscEvent(OscMessage theOscMessage) {
     }
     // clients
      else if ( theOscMessage.typetag().equals("ssssssss") ) {
-       String lastTimeSeen = theOscMessage.get(7).stringValue();
-       String firstTimeSeen = theOscMessage.get(2).stringValue();
-       String probes = theOscMessage.get(1).stringValue();
-       String essid = theOscMessage.get(3).stringValue();
-       String power = theOscMessage.get(4).stringValue();
-       println(theOscMessage.arguments());
+	String lastTimeSeen = theOscMessage.get(4).stringValue();
+      String firstTimeSeen = theOscMessage.get(2).stringValue();
+      String stationMAC = theOscMessage.get(5).stringValue();
+      String clientMAC = theOscMessage.get(1).stringValue();
+      String essid = theOscMessage.get(3).stringValue(); //@MAC duessidnt
+      String power = theOscMessage.get(7).stringValue();
     }
   }
 }
